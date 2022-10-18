@@ -33,9 +33,7 @@ namespace HotelListing.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetHotels()
-        {
-            throw new Exception();
-
+        {           
             var hotels = await _unitOfWork.Hotels.GetAll();
             var results = _mapper.Map<IList<HotelDTO>>(hotels);
             return Ok(results);
@@ -47,9 +45,7 @@ namespace HotelListing.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetHotel(int id)
-        {
-            throw new Exception();
-
+        {          
             var hotel = await _unitOfWork.Hotels.Get(q => q.Id == id, new List<string> { "Country" });
             var result = _mapper.Map<HotelDTO>(hotel);
             return Ok(result);
@@ -66,9 +62,7 @@ namespace HotelListing.Controllers
                 _logger.LogError($"Invalid POST attempt in {nameof(CreateHotels)}");
                 return BadRequest(ModelState);
             }
-
-            throw new Exception();
-
+            
             var hotel = _mapper.Map<Hotel>(hotelDTO);
             await _unitOfWork.Hotels.Insert(hotel);
             await _unitOfWork.Save();
@@ -88,9 +82,7 @@ namespace HotelListing.Controllers
             {
                 _logger.LogError($"Invalid Update attempt in {nameof(UpdateHotel)}");
                 return BadRequest(ModelState);
-            }
-
-            throw new Exception();
+            }            
 
             var hotel = await _unitOfWork.Hotels.Get(h => h.Id == id);
             if (hotel == null)
@@ -119,7 +111,6 @@ namespace HotelListing.Controllers
                 return BadRequest();
             }
 
-            throw new Exception();
             var country = _unitOfWork.Hotels.Get(c => c.Id == id);
             if (country == null)
             {

@@ -30,17 +30,14 @@ namespace HotelListing.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet]      
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetCountries()
         {
-            throw new Exception();
-
             var countries = await _unitOfWork.Countries.GetAll();
             var results = _mapper.Map<IList<CountryDTO>>(countries);
             return Ok(results);
-
         }
 
         [HttpGet("{id:int}", Name = "GetCountry")]
@@ -48,8 +45,6 @@ namespace HotelListing.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetCountry(int id)
         {
-            throw new Exception();
-
             var country = await _unitOfWork.Countries.Get(q => q.Id == id, new List<string> { "Hotels" });
             var result = _mapper.Map<CountryDTO>(country);
             return Ok(result);
@@ -65,9 +60,7 @@ namespace HotelListing.Controllers
             {
                 _logger.LogError($"Something went wrong in the {nameof(CreateCountry)}");
                 return BadRequest(ModelState);
-            }
-
-            throw new Exception();
+            }            
 
             var country = _mapper.Map<Country>(countryDTO);
             await _unitOfWork.Countries.Insert(country);
@@ -90,8 +83,6 @@ namespace HotelListing.Controllers
                 _logger.LogError($"Invalid Update attempt in {nameof(UpdateCountry)}");
                 return BadRequest(ModelState);
             }
-
-            throw new Exception();
 
             var country = await _unitOfWork.Countries.Get(c => c.Id == id);
             if (country == null)
@@ -122,8 +113,7 @@ namespace HotelListing.Controllers
                 return BadRequest();
             }
 
-            throw new Exception();
-
+            
             var country = _unitOfWork.Countries.Get(c => c.Id == id);
             if (country == null)
             {
